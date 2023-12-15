@@ -2,8 +2,16 @@
   "version": "0.2",
   "ignorePaths": [],
   "dictionaryDefinitions": [],
-  "dictionaries": ["typescript", "html", "css", "rust", "react"],
-  "words": [],
+  "dictionaries": [
+    "typescript",
+    "html",
+    "css",
+    "rust",
+    "react"
+  ],
+  "words": [
+    "tauri"
+  ],
   "ignoreWords": [],
   "import": []
 }

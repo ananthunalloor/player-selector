@@ -1,7 +1,10 @@
 import { useState } from "react";
 import SlotCounter from "react-slot-counter";
+// import Database from "tauri-plugin-sql-api";
 
 function App() {
+  // const db = await Database.load("data/sqlite:test.db");
+
   const [value, setValue] = useState("0");
 
   const onClickHandler = () => {
@@ -14,7 +17,7 @@ function App() {
   };
 
   return (
-    <div className="w-screen h-screen flex flex-col items-center justify-center gap-4">
+    <div className="flex flex-col items-center justify-center w-screen h-screen gap-4">
       <SlotCounter
         value={value}
         startValue="000"
