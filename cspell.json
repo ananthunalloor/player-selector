@@ -10,6 +10,7 @@
     "react"
   ],
   "words": [
+    "tailwindcss",
     "tauri"
   ],
   "ignoreWords": [],
