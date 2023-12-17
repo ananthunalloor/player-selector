@@ -20,12 +20,14 @@ export const dbConnections = () => {
     console.log("filePath", filePath);
     const db = await Database.load(filePath);
     console.log("db", db);
-    const playerInfo = await db.select("SELECT * from teams where id = 1");
+    const playerInfo = await db.select("SELECT * from team_list where id = 1");
     return playerInfo;
   };
 
   const addPlayerInfo = async () => {
-    const db = await Database.load("../../data/sqlite:test.sqlite");
+    const appDataDirPath = await appDataDir();
+    const filePath = await join(appDataDirPath, "data/sqlite:test.sqlite");
+    const db = await Database.load(filePath);
     console.log("db", db);
     const playerInfo = await db.execute(
       "INSERT INTO players (player_id, team_id, name, points) VALUES ($1, $2, $3, $4), (2, 1, 'test2', 200)"
