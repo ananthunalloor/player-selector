@@ -1,6 +1,6 @@
 import { Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import SlotCounter from "react-slot-counter";
 import { Dialog, PlayerImage, SaveDialogDetails } from "./components";
 
@@ -29,6 +29,11 @@ function App() {
   const saveDialogOpenHandler = () => {
     saveDialogOpen();
   };
+
+  const onSaveHandler = useCallback(() => {
+    saveDialogClose();
+    playerDialogClose();
+  }, [saveDialogClose, playerDialogClose]);
 
   return (
     <>
@@ -63,7 +68,7 @@ function App() {
         onClose={saveDialogClose}
         opened={saveDialogOpened}
       >
-        <SaveDialogDetails />
+        <SaveDialogDetails onSave={onSaveHandler} />
       </Dialog>
     </>
   );

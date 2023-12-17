@@ -1,6 +1,15 @@
 import { Autocomplete, Button, Flex, TextInput } from "@mantine/core";
+import { useCallback } from "react";
 
-export const SaveDialogDetails = () => {
+export interface SaveDialogDetailsProps {
+  onSave?: () => void;
+}
+
+export const SaveDialogDetails = ({ onSave }: SaveDialogDetailsProps) => {
+  const onSaveHandler = useCallback(() => {
+    onSave?.();
+  }, [onSave]);
+
   return (
     <Flex
       style={{
@@ -26,6 +35,7 @@ export const SaveDialogDetails = () => {
         />
       </Flex>
       <Button
+        onClick={onSaveHandler}
         style={{
           width: "fit-content",
           alignSelf: "flex-end",
