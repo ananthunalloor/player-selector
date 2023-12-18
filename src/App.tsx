@@ -3,9 +3,15 @@ import { useDisclosure } from "@mantine/hooks";
 import { useCallback, useState } from "react";
 import SlotCounter from "react-slot-counter";
 import { Dialog, PlayerImage, SaveDialogDetails } from "./components";
+import { dbConnections } from "./utils/utils";
 
 function App() {
+  const { getPlayerInfo, addPlayerInfo } = dbConnections();
+
   const [value, setValue] = useState("0");
+
+  console.log(getPlayerInfo());
+
   const [
     playerDialogOpened,
     { open: playerDialogOpen, close: playerDialogClose },
@@ -33,6 +39,7 @@ function App() {
   const onSaveHandler = useCallback(() => {
     saveDialogClose();
     playerDialogClose();
+    addPlayerInfo();
   }, [saveDialogClose, playerDialogClose]);
 
   return (
