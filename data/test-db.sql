@@ -4,15 +4,15 @@ PRAGMA foreign_keys = ON;
 
 -- Create a tournament table
 CREATE TABLE IF NOT EXISTS tournaments (
-  tournament_id INTEGER PRIMARY KEY,
+  tournament_id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL,
-  start_date TEXT NOT NULL,
-  end_date TEXT NOT NULL
+  start_date TEXT,
+  end_date TEXT
 );
 
 -- Create a team table
 CREATE TABLE IF NOT EXISTS teams (
-  team_id INTEGER PRIMARY KEY,
+  team_id INTEGER PRIMARY KEY AUTOINCREMENT,
   tournament_id INTEGER NOT NULL,
   name TEXT NOT NULL,
   points INTEGER NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS teams (
 
 -- Create a player table
 CREATE TABLE IF NOT EXISTS players (
-  player_id INTEGER PRIMARY KEY,
+  player_id INTEGER PRIMARY KEY AUTOINCREMENT,
   team_id INTEGER NOT NULL,
   name TEXT NOT NULL,
   points INTEGER NOT NULL,
