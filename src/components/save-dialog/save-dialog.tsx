@@ -1,13 +1,5 @@
-import {
-  Autocomplete,
-  Button,
-  ComboboxItem,
-  Flex,
-  TextInput,
-} from "@mantine/core";
-import { useCallback, useMemo } from "react";
-import { DBConnections } from "../../utils/utils";
-import { DataProvider } from "../../utils";
+import { Autocomplete, Button, Flex, TextInput } from "@mantine/core";
+import { useCallback } from "react";
 
 export type Data = {
   name: string;
@@ -20,10 +12,7 @@ export interface SaveDialogDetailsProps {
   onSave?: () => void;
 }
 
-export const SaveDialogDetails = async ({ onSave }: SaveDialogDetailsProps) => {
-  const { getTeamListData } = DataProvider();
-  const teamList = await getTeamListData();
-
+export const SaveDialogDetails = ({ onSave }: SaveDialogDetailsProps) => {
   const onSaveHandler = useCallback(() => {
     onSave?.();
   }, [onSave]);
@@ -44,7 +33,6 @@ export const SaveDialogDetails = async ({ onSave }: SaveDialogDetailsProps) => {
         <Autocomplete
           label="Your favorite library"
           placeholder="Pick value or enter anything"
-          data={teamList}
         />
         <TextInput
           placeholder="Input component"
