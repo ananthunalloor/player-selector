@@ -3,8 +3,11 @@ import { useDisclosure } from "@mantine/hooks";
 import { useCallback, useState } from "react";
 import SlotCounter from "react-slot-counter";
 import { Dialog, PlayerImage, SaveDialogDetails } from "./components";
+import { DBConnections } from "./utils";
 
 function App() {
+  DBConnections();
+
   const [value, setValue] = useState("0");
 
   const [

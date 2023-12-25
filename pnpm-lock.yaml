@@ -8,12 +8,18 @@ dependencies:
   '@mantine/core':
     specifier: ^7.3.2
     version: 7.3.2(@mantine/hooks@7.3.2)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
+  '@mantine/form':
+    specifier: ^7.3.2
+    version: 7.3.2(react@18.2.0)
   '@mantine/hooks':
     specifier: ^7.3.2
     version: 7.3.2(react@18.2.0)
   '@tauri-apps/api':
     specifier: ^1.5.1
     version: 1.5.1
+  mantine-form-yup-resolver:
+    specifier: ^2.0.0
+    version: 2.0.0(@mantine/form@7.3.2)(yup@1.3.3)
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -26,6 +32,9 @@ dependencies:
   tauri-plugin-sql-api:
     specifier: github:tauri-apps/tauri-plugin-sql#v1
     version: github.com/tauri-apps/tauri-plugin-sql/cf80d013a6ea34ee3ca74e4968a1632e87ba0de2
+  yup:
+    specifier: ^1.3.3
+    version: 1.3.3
 
 devDependencies:
   '@tauri-apps/cli':
@@ -667,6 +676,16 @@ packages:
       type-fest: 3.13.1
     transitivePeerDependencies:
       - '@types/react'
+    dev: false
+
+  /@mantine/form@7.3.2(react@18.2.0):
+    resolution: {integrity: sha512-/qa1KQKVC46XWgIU190r3XM3Xld8Lsvz4L/an//TO67RnAGEdC5OCvr2JCb+fprZZi3YdxaKOkVNvP20W23qkg==}
+    peerDependencies:
+      react: ^18.2.0
+    dependencies:
+      fast-deep-equal: 3.1.3
+      klona: 2.0.6
+      react: 18.2.0
     dev: false
 
   /@mantine/hooks@7.3.2(react@18.2.0):
@@ -1447,7 +1466,6 @@ packages:
 
   /fast-deep-equal@3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
-    dev: true
 
   /fast-glob@3.3.2:
     resolution: {integrity: sha512-oX2ruAFQwf/Orj8m737Y5adxDQO0LAB7/S5MnxCdTNDd4p6BsyIVsv9JQsATbTSq8KHRpLwIHbVlUNatxd+1Ow==}
@@ -1728,6 +1746,11 @@ packages:
       json-buffer: 3.0.1
     dev: true
 
+  /klona@2.0.6:
+    resolution: {integrity: sha512-dhG34DXATL5hSxJbIexCft8FChFXtmskoZYnoPWjXQuebWYCNkVeV3KkGegCK9CP1oswI/vQibS2GY7Em/sJJA==}
+    engines: {node: '>= 8'}
+    dev: false
+
   /levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
@@ -1780,6 +1803,17 @@ packages:
     dependencies:
       yallist: 4.0.0
     dev: true
+
+  /mantine-form-yup-resolver@2.0.0(@mantine/form@7.3.2)(yup@1.3.3):
+    resolution: {integrity: sha512-nmmUvhBMDCi/aYUMusWJSV+m/UGu/0rQ1qAhh1B7TRk4cZ3ZUTgoewSvb5+BRldz+zZX62jLpzQX8hJsV8dsWA==}
+    engines: {node: '>=16.6.0'}
+    peerDependencies:
+      '@mantine/form': '>=7.0.0'
+      yup: '>=1.0.0'
+    dependencies:
+      '@mantine/form': 7.3.2(react@18.2.0)
+      yup: 1.3.3
+    dev: false
 
   /merge2@1.4.1:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
@@ -2046,6 +2080,10 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       react-is: 16.13.1
+    dev: false
+
+  /property-expr@2.0.6:
+    resolution: {integrity: sha512-SVtmxhRE/CGkn3eZY1T6pC8Nln6Fr/lu1mKSgRud0eC73whjGfoAogbn78LkD8aFL0zz3bAFerKSnOl7NlErBA==}
     dev: false
 
   /punycode@2.3.1:
@@ -2375,6 +2413,10 @@ packages:
       any-promise: 1.3.0
     dev: true
 
+  /tiny-case@1.0.3:
+    resolution: {integrity: sha512-Eet/eeMhkO6TX8mnUteS9zgPbUMQa4I6Kkp5ORiBD5476/m+PIRiumP5tmh5ioJpH7k51Kehawy2UDfsnxxY8Q==}
+    dev: false
+
   /to-fast-properties@2.0.0:
     resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}
     engines: {node: '>=4'}
@@ -2386,6 +2428,10 @@ packages:
     dependencies:
       is-number: 7.0.0
     dev: true
+
+  /toposort@2.0.2:
+    resolution: {integrity: sha512-0a5EOkAUp8D4moMi2W8ZF8jcga7BgZd91O/yabJCFY8az+XSzeGyTKs0Aoo897iV1Nj6guFq8orWDS96z91oGg==}
+    dev: false
 
   /ts-api-utils@1.0.3(typescript@5.3.2):
     resolution: {integrity: sha512-wNMeqtMz5NtwpT/UZGY5alT+VoKdSsOOP/kqHFcUW1P/VRhH2wJ48+DN2WwUliNbQ976ETwDL0Ifd2VVvgonvg==}
@@ -2415,6 +2461,11 @@ packages:
     resolution: {integrity: sha512-Ne+eE4r0/iWnpAxD852z3A+N0Bt5RN//NjJwRd2VFHEmrywxf5vsZlh4R6lixl6B+wz/8d+maTSAkN1FIkI3LQ==}
     engines: {node: '>=10'}
     dev: true
+
+  /type-fest@2.19.0:
+    resolution: {integrity: sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==}
+    engines: {node: '>=12.20'}
+    dev: false
 
   /type-fest@3.13.1:
     resolution: {integrity: sha512-tLq3bSNx+xSpwvAJnzrK0Ep5CLNWjvFTOp71URMaAEWBfRb9nnJiBoUe0tF8bI4ZFO3omgBR6NvnbzVUT3Ly4g==}
@@ -2578,6 +2629,15 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  /yup@1.3.3:
+    resolution: {integrity: sha512-v8QwZSsHH2K3/G9WSkp6mZKO+hugKT1EmnMqLNUcfu51HU9MDyhlETT/JgtzprnrnQHPWsjc6MUDMBp/l9fNnw==}
+    dependencies:
+      property-expr: 2.0.6
+      tiny-case: 1.0.3
+      toposort: 2.0.2
+      type-fest: 2.19.0
+    dev: false
 
   github.com/tauri-apps/tauri-plugin-sql/cf80d013a6ea34ee3ca74e4968a1632e87ba0de2:
     resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-sql/tar.gz/cf80d013a6ea34ee3ca74e4968a1632e87ba0de2}
