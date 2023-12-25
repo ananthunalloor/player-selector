@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS teams (
 -- Create a player table
 CREATE TABLE IF NOT EXISTS players (
   player_id INTEGER PRIMARY KEY AUTOINCREMENT,
-  team_id INTEGER NOT NULL,
+  team_id INTEGER,
   name TEXT NOT NULL,
   points INTEGER NOT NULL,
   FOREIGN KEY (team_id) REFERENCES teams(team_id)
@@ -35,5 +35,22 @@ CREATE TABLE IF NOT EXISTS team_list (
   points INTEGER NOT NULL,
   PRIMARY KEY (team_id, player_id),  -- Add a primary key constraint if needed
   FOREIGN KEY (team_id) REFERENCES teams(team_id),
+  FOREIGN KEY (player_id) REFERENCES players(player_id)
+);
+
+-- Create a sold player list
+CREATE TABLE IF NOT EXISTS sold_player(
+  team_id INTEGER,
+  player_id INTEGER,
+  points INTEGER NOT NULL,
+  PRIMARY KEY (team_id, player_id),  -- Add a primary key constraint if needed
+  FOREIGN KEY (team_id) REFERENCES teams(team_id),
+  FOREIGN KEY (player_id) REFERENCES players(player_id)
+);
+
+-- Create a unsold player list
+CREATE TABLE IF NOT EXISTS unsold_player(
+  player_id INTEGER,
+  PRIMARY KEY (player_id),  -- Add a primary key constraint if needed
   FOREIGN KEY (player_id) REFERENCES players(player_id)
 );
