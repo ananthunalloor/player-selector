@@ -9,6 +9,7 @@ function App() {
   DBConnections();
 
   const [value, setValue] = useState("0");
+  const [disableButton, setDisableButton] = useState(false);
 
   const [
     playerDialogOpened,
@@ -17,18 +18,14 @@ function App() {
   const [saveDialogOpened, { open: saveDialogOpen, close: saveDialogClose }] =
     useDisclosure();
 
-  const onClickHandler = () => {
-    //on click change the value to random number between 0 and 350 and fix the value to 3 digits
-
-    setValue(
-      Math.floor(Math.random() * 350)
-        .toString()
-        .padStart(3, "0")
-    );
+  const onClickHandler = useCallback(() => {
+    setDisableButton(true);
+    setValue(Math.floor(Math.random() * 1000).toString());
     setTimeout(() => {
       playerDialogOpen();
+      setDisableButton(false);
     }, 4000);
-  };
+  }, []);
 
   const saveDialogOpenHandler = () => {
     saveDialogOpen();
@@ -53,12 +50,16 @@ function App() {
           valueClassName="w-auto"
           direction="top-down"
         />
-        <Button className="bg-blue-400" onClick={onClickHandler}>
+        <Button
+          className="bg-blue-400"
+          onClick={onClickHandler}
+          disabled={disableButton}
+        >
           Pick Player
         </Button>
       </div>
       <Dialog
-        title="test"
+        title="Player Auction"
         onClose={playerDialogClose}
         opened={playerDialogOpened}
       >

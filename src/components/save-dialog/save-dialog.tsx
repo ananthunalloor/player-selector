@@ -23,12 +23,11 @@ const schema = yup.object().shape({
 });
 
 export const SaveDialogDetails = ({ onSave }: SaveDialogDetailsProps) => {
-  const { getTeamListData } = DataProvider();
-  getTeamListData.then((res) => setTeamList(res));
-
   const [teamList, setTeamList] = useState<ComboboxItem[]>(
     [] as ComboboxItem[]
   );
+  const { getTeamListData } = DataProvider();
+  getTeamListData.then((res) => setTeamList(res));
 
   const { getInputProps, onSubmit } = useForm<FormValues>({
     initialValues: {

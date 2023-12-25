@@ -12,8 +12,9 @@ export const DBConnections = () => {
     );
   };
 
-  const getTeamList = () => {
-    return dbPromise.then((db) => db.select<Team[]>("SELECT * FROM teams"));
+  const getTeamList = async () => {
+    const db = await dbPromise;
+    return await db.select<Team[]>("SELECT * FROM teams");
   };
 
   const getAllPlayerList = () => {
@@ -26,9 +27,10 @@ export const DBConnections = () => {
     );
   };
 
-  const getUnsoldPlayerList = () => {
-    return dbPromise.then((db) =>
-      db.select<Player[]>("SELECT * FROM players WHERE status = 'UNSOLD'")
+  const getUnsoldPlayerList = async () => {
+    const db = await dbPromise;
+    return await db.select<Player[]>(
+      "SELECT * FROM players WHERE status = 'UNSOLD'"
     );
   };
 

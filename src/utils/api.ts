@@ -2,7 +2,8 @@ import { ComboboxItem } from "@mantine/core";
 import { DBConnections } from "./utils";
 
 export const DataProvider = () => {
-  const { getTeamList } = DBConnections();
+  const { getTeamList, getAllPlayerList, getUnsoldPlayerList } =
+    DBConnections();
 
   const getTeamListData: Promise<ComboboxItem[]> = getTeamList()
     .then(
@@ -14,5 +15,15 @@ export const DataProvider = () => {
     )
     .catch(() => [] as ComboboxItem[]);
 
-  return { getTeamListData };
+  const getTeamPlayerListData = getAllPlayerList()
+    .then((response) => response.map((res) => res.player_id.toString()))
+    .catch(() => [] as string[]);
+
+  const getUnsoldPlayerListData = getUnsoldPlayerList()
+    .then((response) => response.map((res) => res.player_id.toString()))
+    .catch(() => [] as string[]);
+
+  // const getSoldPlayerList  =
+
+  return { getTeamListData, getTeamPlayerListData, getUnsoldPlayerListData };
 };
