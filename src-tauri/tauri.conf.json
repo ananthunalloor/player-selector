@@ -21,7 +21,13 @@
       },
       "fs": {
         "all": true,
-        "scope": ["$APPDATA/*", "$APP/*", "$DATA/*"]
+        "scope": [
+          "$APPDATA/*",
+          "$APP/*",
+          "$DATA/*",
+          "$PICTURE/player/*",
+          "$DOWNLOAD/*"
+        ]
       }
     },
     "bundle": {

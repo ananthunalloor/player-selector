@@ -1,7 +1,11 @@
+import { useCallback, useState } from "react";
+
+import toast from "react-hot-toast";
+import SlotCounter from "react-slot-counter";
+
 import { Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { useCallback, useState } from "react";
-import SlotCounter from "react-slot-counter";
+
 import { Dialog, PlayerImage, SaveDialogDetails } from "./components";
 import { DBConnections } from "./utils";
 
@@ -21,6 +25,7 @@ function App() {
   const onClickHandler = useCallback(() => {
     setDisableButton(true);
     setValue(Math.floor(Math.random() * 1000).toString());
+    toast.error("This is an error!");
     setTimeout(() => {
       playerDialogOpen();
       setDisableButton(false);
@@ -35,6 +40,10 @@ function App() {
     saveDialogClose();
     playerDialogClose();
   }, [saveDialogClose, playerDialogClose]);
+
+  const onHandleUnSoldClick = useCallback(() => {}, []);
+
+  const onHandleSoldClick = useCallback(() => {}, []);
 
   return (
     <>
@@ -66,10 +75,11 @@ function App() {
         <PlayerImage
           onSoldClick={saveDialogOpenHandler}
           onUnSoldClick={saveDialogOpenHandler}
+          selectedPlayer={0}
         />
       </Dialog>
       <Dialog
-        title="Save Dialog"
+        title=" Save Player Details"
         onClose={saveDialogClose}
         opened={saveDialogOpened}
       >
