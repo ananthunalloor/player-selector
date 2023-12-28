@@ -75,7 +75,7 @@ function App() {
         <PlayerImage
           onSoldClick={saveDialogOpenHandler}
           onUnSoldClick={saveDialogOpenHandler}
-          selectedPlayer={0}
+          selectedPlayer={1}
         />
       </Dialog>
       <Dialog

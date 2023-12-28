@@ -1,7 +1,8 @@
 import { Button, Flex, Image } from "@mantine/core";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { downloadDir } from "@tauri-apps/api/path";
+import { BaseDirectory, downloadDir, resourceDir } from "@tauri-apps/api/path";
+import { readBinaryFile } from "@tauri-apps/api/fs";
 
 export interface PlayerImageProps {
   onSoldClick?: () => void;
@@ -14,6 +15,8 @@ export const PlayerImage = ({
   onUnSoldClick,
   selectedPlayer,
 }: PlayerImageProps) => {
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+
   const onSoldClickHandler = useCallback(() => {
     onSoldClick && onSoldClick();
   }, [onSoldClick]);
@@ -22,13 +25,19 @@ export const PlayerImage = ({
     onUnSoldClick && onUnSoldClick();
   }, [onUnSoldClick]);
 
-  const playerImage = useMemo(async () => {
-    const picturePath = await downloadDir().catch((err) => console.log(err));
-    console.log(picturePath);
+  useEffect(() => {
+    const loadPlayerImage = async () => {
+      const contents = await readBinaryFile(
+        `com.tauri.dev/player/${selectedPlayer}.jpg`,
+        {
+          dir: BaseDirectory.Config,
+        }
+      );
+      const blob = new Blob([contents], { type: "image/jpeg" });
+      setImageUrl(URL.createObjectURL(blob));
+    };
 
-    return new URL(
-      "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-10.png"
-    );
+    loadPlayerImage();
   }, [selectedPlayer]);
 
   return (
@@ -38,12 +47,7 @@ export const PlayerImage = ({
         gap: "1rem",
       }}
     >
-      <Image
-        radius="md"
-        // h={700}
-        w={700}
-        src={playerImage}
-      />
+      {imageUrl && <Image radius="md" h={700} src={imageUrl} />}
       <Flex
         direction={"row"}
         style={{
