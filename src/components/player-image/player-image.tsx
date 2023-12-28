@@ -47,7 +47,17 @@ export const PlayerImage = ({
         gap: "1rem",
       }}
     >
-      {imageUrl && <Image radius="md" h={700} src={imageUrl} />}
+      {imageUrl && (
+        <Image
+          radius="md"
+          h={700}
+          src={imageUrl}
+          style={{
+            objectFit: "contain",
+            height: 500,
+          }}
+        />
+      )}
       <Flex
         direction={"row"}
         style={{

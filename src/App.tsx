@@ -32,18 +32,18 @@ function App() {
     }, 4000);
   }, []);
 
-  const saveDialogOpenHandler = () => {
-    saveDialogOpen();
-  };
-
   const onSaveHandler = useCallback(() => {
     saveDialogClose();
     playerDialogClose();
   }, [saveDialogClose, playerDialogClose]);
 
-  const onHandleUnSoldClick = useCallback(() => {}, []);
+  const onHandleUnSoldClick = useCallback(() => {
+    playerDialogClose();
+  }, [playerDialogClose]);
 
-  const onHandleSoldClick = useCallback(() => {}, []);
+  const onHandleSoldClick = useCallback(() => {
+    saveDialogOpen();
+  }, [saveDialogOpen]);
 
   return (
     <>
@@ -73,8 +73,8 @@ function App() {
         opened={playerDialogOpened}
       >
         <PlayerImage
-          onSoldClick={saveDialogOpenHandler}
-          onUnSoldClick={saveDialogOpenHandler}
+          onSoldClick={onHandleSoldClick}
+          onUnSoldClick={onHandleUnSoldClick}
           selectedPlayer={1}
         />
       </Dialog>
