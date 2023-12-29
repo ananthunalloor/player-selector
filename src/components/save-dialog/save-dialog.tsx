@@ -1,17 +1,11 @@
 import { Button, ComboboxItem, Flex, Select, TextInput } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
 import { useCallback, useState } from "react";
-import { DataProvider } from "../../utils";
+import { FormValues, getTeamListData } from "../../utils";
 
 import * as yup from "yup";
-
 export interface SaveDialogDetailsProps {
-  onSave?: () => void;
-}
-
-interface FormValues {
-  team: string | undefined;
-  points: string | undefined;
+  onSave?: (val: FormValues) => void;
 }
 
 const schema = yup.object().shape({
@@ -26,8 +20,7 @@ export const SaveDialogDetails = ({ onSave }: SaveDialogDetailsProps) => {
   const [teamList, setTeamList] = useState<ComboboxItem[]>(
     [] as ComboboxItem[]
   );
-  const { getTeamListData } = DataProvider();
-  getTeamListData.then((res) => setTeamList(res));
+  getTeamListData().then((res) => setTeamList(res));
 
   const { getInputProps, onSubmit } = useForm<FormValues>({
     initialValues: {
@@ -39,9 +32,7 @@ export const SaveDialogDetails = ({ onSave }: SaveDialogDetailsProps) => {
 
   const onSaveHandler = useCallback(
     (values: FormValues) => {
-      console.log(values);
-
-      onSave?.();
+      onSave?.(values);
     },
     [onSave]
   );

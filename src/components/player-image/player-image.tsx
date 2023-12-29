@@ -1,7 +1,7 @@
 import { Button, Flex, Image } from "@mantine/core";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-import { BaseDirectory, downloadDir, resourceDir } from "@tauri-apps/api/path";
+import { BaseDirectory } from "@tauri-apps/api/path";
 import { readBinaryFile } from "@tauri-apps/api/fs";
 
 export interface PlayerImageProps {

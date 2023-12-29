@@ -1,6 +1,7 @@
 export enum Status {
   SOLD = "SOLD",
   UNSOLD = "UNSOLD",
+  READY = "READY",
 }
 
 export type Tournament = {
@@ -23,4 +24,9 @@ export type Player = {
   name: string;
   points: number;
   status: Status;
+};
+
+export type FormValues = {
+  team?: string;
+  points?: string;
 };

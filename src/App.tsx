@@ -7,12 +7,15 @@ import { Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
 import { Dialog, PlayerImage, SaveDialogDetails } from "./components";
-import { DBConnections } from "./utils";
+import {
+  FormValues,
+  getReadyPlayerListData,
+  updatePlayerSold,
+  updatePlayerUnsold,
+} from "./utils";
 
 function App() {
-  DBConnections();
-
-  const [value, setValue] = useState("0");
+  const [value, setValue] = useState<number>(0);
   const [disableButton, setDisableButton] = useState(false);
 
   const [
@@ -23,23 +26,52 @@ function App() {
     useDisclosure();
 
   const onClickHandler = useCallback(() => {
-    setDisableButton(true);
-    setValue(Math.floor(Math.random() * 1000).toString());
-    toast.error("This is an error!");
-    setTimeout(() => {
-      playerDialogOpen();
-      setDisableButton(false);
-    }, 4000);
+    const getPlayerData = async () => {
+      const playerList = await getReadyPlayerListData();
+      console.log(playerList);
+      const randomValue =
+        playerList[Math.floor(Math.random() * playerList.length)];
+      console.log(randomValue);
+      setValue(randomValue);
+    };
+    getPlayerData().then(() => {
+      setDisableButton(true);
+      setTimeout(() => {
+        playerDialogOpen();
+        setDisableButton(false);
+      }, 4000);
+    });
   }, []);
 
-  const onSaveHandler = useCallback(() => {
-    saveDialogClose();
-    playerDialogClose();
-  }, [saveDialogClose, playerDialogClose]);
+  const onSaveHandler = useCallback(
+    (val: FormValues) => {
+      if (val.team !== undefined || val.points !== undefined) {
+        val.team &&
+          val.points &&
+          updatePlayerSold(value, parseInt(val.team), parseInt(val.points))
+            .then(() => {
+              saveDialogClose();
+              playerDialogClose();
+            })
+            .catch(() => {
+              toast.error("Something went wrong");
+            });
+      }
+      saveDialogClose();
+      playerDialogClose();
+    },
+    [saveDialogClose, playerDialogClose, value]
+  );
 
   const onHandleUnSoldClick = useCallback(() => {
-    playerDialogClose();
-  }, [playerDialogClose]);
+    updatePlayerUnsold(value)
+      .then(() => {
+        playerDialogClose();
+      })
+      .catch((err) => {
+        toast.error(err);
+      });
+  }, [playerDialogClose, value]);
 
   const onHandleSoldClick = useCallback(() => {
     saveDialogOpen();
@@ -49,7 +81,7 @@ function App() {
     <>
       <div className="flex flex-col items-center justify-center w-screen h-screen gap-4">
         <SlotCounter
-          value={value}
+          value={value?.toString().padStart(3, "0") || "000"}
           startValue="000"
           startValueOnce
           animateUnchanged
@@ -75,7 +107,7 @@ function App() {
         <PlayerImage
           onSoldClick={onHandleSoldClick}
           onUnSoldClick={onHandleUnSoldClick}
-          selectedPlayer={1}
+          selectedPlayer={value}
         />
       </Dialog>
       <Dialog
