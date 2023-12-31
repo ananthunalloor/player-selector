@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import toast from "react-hot-toast";
 import SlotCounter from "react-slot-counter";
@@ -9,7 +9,9 @@ import { useDisclosure } from "@mantine/hooks";
 import { Dialog, PlayerImage, SaveDialogDetails } from "./components";
 import {
   FormValues,
+  getPlayerCount,
   getReadyPlayerListData,
+  getUnSoldPlayerListData,
   updatePlayerSold,
   updatePlayerUnsold,
 } from "./utils";
@@ -17,6 +19,15 @@ import {
 function App() {
   const [value, setValue] = useState<number>(0);
   const [disableButton, setDisableButton] = useState(false);
+  const [playerCount, setPlayerCount] = useState<{
+    total: number;
+    ready: number;
+    sold: number;
+  }>({
+    total: 0,
+    ready: 0,
+    sold: 0,
+  });
 
   const [
     playerDialogOpened,
@@ -27,14 +38,31 @@ function App() {
 
   const onClickHandler = useCallback(() => {
     const getPlayerData = async () => {
-      const playerList = await getReadyPlayerListData();
-      console.log(playerList);
-      const randomValue =
-        playerList[Math.floor(Math.random() * playerList.length)];
-      console.log(randomValue);
-      setValue(randomValue);
+      const readyPlayerList = await getReadyPlayerListData();
+      const UnSoldPlayerList = await getUnSoldPlayerListData();
+
+      if (readyPlayerList.length === 0 && UnSoldPlayerList.length === 0) {
+        toast.error("No Players Left");
+        return 0;
+      }
+
+      if (readyPlayerList.length <= 1) {
+        const playerList = [...readyPlayerList, ...UnSoldPlayerList];
+        const randomValue =
+          playerList[Math.floor(Math.random() * playerList.length)];
+        return randomValue;
+      } else {
+        const randomValue =
+          readyPlayerList[Math.floor(Math.random() * readyPlayerList.length)];
+        return randomValue;
+      }
     };
-    getPlayerData().then(() => {
+
+    getPlayerData().then((res) => {
+      setValue(res);
+      if (res === 0) {
+        return;
+      }
       setDisableButton(true);
       setTimeout(() => {
         playerDialogOpen();
@@ -77,8 +105,39 @@ function App() {
     saveDialogOpen();
   }, [saveDialogOpen]);
 
+  useEffect(() => {
+    const getPlayerListCount = async () => {
+      return await getPlayerCount();
+    };
+    getPlayerListCount()
+      .then((res) => {
+        setPlayerCount(res);
+      })
+      .catch(() => {
+        setPlayerCount({
+          total: 0,
+          ready: 0,
+          sold: 0,
+        });
+      });
+  }, [value, disableButton, playerDialogOpened, saveDialogOpened]);
+
   return (
     <>
+      <div className="absolute top-0 right-0 flex gap-2 p-6 text-xs">
+        <div className="flex">
+          Total Players:{" "}
+          <p className="font-bold text-blue-500">{playerCount.total}</p>
+        </div>
+        <div className="flex">
+          Sold Players:{" "}
+          <p className="font-bold text-green-400">{playerCount.sold}</p>
+        </div>
+        <div className="flex">
+          Unsold Players:{" "}
+          <p className="font-bold text-yellow-400">{playerCount.ready}</p>
+        </div>
+      </div>
       <div className="flex flex-col items-center justify-center w-screen h-screen gap-4">
         <SlotCounter
           value={value?.toString().padStart(3, "0") || "000"}
