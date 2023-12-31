@@ -5,9 +5,16 @@ export interface DialogProps {
   children: React.ReactNode;
   opened: boolean;
   onClose: () => void;
+  classNames?: string;
 }
 
-export const Dialog = ({ title, children, opened, onClose }: DialogProps) => {
+export const Dialog = ({
+  title,
+  children,
+  opened,
+  onClose,
+  classNames,
+}: DialogProps) => {
   return (
     <Modal
       opened={opened}
@@ -16,6 +23,7 @@ export const Dialog = ({ title, children, opened, onClose }: DialogProps) => {
       centered
       closeOnClickOutside={false}
       closeOnEscape={false}
+      className={classNames}
     >
       {children}
     </Modal>

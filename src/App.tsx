@@ -50,6 +50,7 @@ function App() {
         const playerList = [...readyPlayerList, ...UnSoldPlayerList];
         const randomValue =
           playerList[Math.floor(Math.random() * playerList.length)];
+
         return randomValue;
       } else {
         const randomValue =
@@ -123,19 +124,19 @@ function App() {
   }, [value, disableButton, playerDialogOpened, saveDialogOpened]);
 
   return (
-    <>
-      <div className="absolute top-0 right-0 flex gap-2 p-6 text-xs">
-        <div className="flex">
-          Total Players:{" "}
-          <p className="font-bold text-blue-500">{playerCount.total}</p>
+    <main className="bg-center bg-no-repeat bg-cover bg-opacity-90 bg-hero-pattern">
+      <div className="absolute top-0 right-0 flex items-center gap-2 p-6 text-xs">
+        <div className="flex gap-1 italic">
+          Total Players:
+          <p className="font-bold text-blue-500"> {playerCount.total}</p>
         </div>
-        <div className="flex">
-          Sold Players:{" "}
-          <p className="font-bold text-green-400">{playerCount.sold}</p>
+        <div className="flex gap-1">
+          Sold Players:
+          <p className="font-bold text-green-400"> {playerCount.sold}</p>
         </div>
-        <div className="flex">
-          Unsold Players:{" "}
-          <p className="font-bold text-yellow-400">{playerCount.ready}</p>
+        <div className="flex gap-1">
+          Unsold Players:
+          <p className="font-bold text-yellow-400"> {playerCount.ready}</p>
         </div>
       </div>
       <div className="flex flex-col items-center justify-center w-screen h-screen gap-4">
@@ -146,12 +147,12 @@ function App() {
           animateUnchanged
           duration={3}
           autoAnimationStart={false}
-          charClassName="text-20xl font-bold"
+          charClassName="text-20xl font-bold text-white"
           valueClassName="w-auto"
           direction="top-down"
         />
         <Button
-          className="bg-blue-400"
+          className="text-lg font-thin bg-green-400"
           onClick={onClickHandler}
           disabled={disableButton}
         >
@@ -173,10 +174,11 @@ function App() {
         title=" Save Player Details"
         onClose={saveDialogClose}
         opened={saveDialogOpened}
+        classNames=""
       >
         <SaveDialogDetails onSave={onSaveHandler} />
       </Dialog>
-    </>
+    </main>
   );
 }
 
