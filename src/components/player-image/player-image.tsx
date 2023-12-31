@@ -1,8 +1,8 @@
 import { Button, Flex, Image } from "@mantine/core";
 import { useCallback, useEffect, useState } from "react";
 
-import { BaseDirectory } from "@tauri-apps/api/path";
 import { readBinaryFile } from "@tauri-apps/api/fs";
+import { BaseDirectory } from "@tauri-apps/api/path";
 
 export interface PlayerImageProps {
   onSoldClick?: () => void;
@@ -30,7 +30,7 @@ export const PlayerImage = ({
       const contents = await readBinaryFile(
         `com.tauri.dev/player/${selectedPlayer}.jpg`,
         {
-          dir: BaseDirectory.Config,
+          dir: BaseDirectory.Picture,
         }
       );
       const blob = new Blob([contents], { type: "image/jpeg" });
